@@ -107,6 +107,7 @@ const actions = {
             .then(res => {
                 const getUsers = res.data.data;
                 context.commit('getUsers', getUsers);
+                success(res);
                 //this.$router.push('/panel/users');
 
             })
@@ -122,23 +123,25 @@ const actions = {
      * @returns {Promise<void>}
      */
     async isUserUpdate(context, payload) {
-        const isUpdate = {
-            id: payload.id,
-            first_name: payload.first_name,
-            last_name: payload.last_name,
-            username: payload.username,
-            email: payload.email,
-            mobile: payload.mobile,
-            home_phone: payload.home_phone,
-            zip_code: payload.zip_code,
-            password: payload.password,
-            confirmation_password: payload.confirmation_password,
-            home_address: payload.home_address,
-            work_address: payload.work_address,
-        };
-        await this.$axios.get('panel/users/' + payload.id, isUpdate)
-            .then(res => {
-                const getUsers = res.data.data;
+        let formData = new FormData();
+        formData.append("first_name", payload.first_name);
+        formData.append("last_name", payload.last_name);
+        formData.append("username", payload.username);
+        formData.append("email", payload.email);
+        formData.append("mobile", payload.mobile);
+        formData.append("home_phone", payload.home_phone);
+        formData.append("zip_code", payload.zip_code);
+        formData.append("password", payload.password);
+        formData.append("confirmation_password", payload.confirmation_password);
+        formData.append("home_address", payload.home_address);
+        formData.append("work_address", payload.work_address);
+        formData.append("image", payload.image);
+        formData.append("role", payload.role);
+        formData.append("permission", payload.permission);
+
+        await this.$axios.post(`panel/users/update/${payload.id}`, formData)
+            .then(async res => {
+                const getUsers = await res.data.data;
                 context.commit('getUsers', getUsers);
             }).catch(err => {
                 error(err);

@@ -60,7 +60,7 @@
                         <ul>
                             <li>
                                 <i class=""></i>
-                                <a @click="isEmployeeLogout()">Logout</a>
+                                <a @click="isUserLogout()">Logout</a>
                             </li>
                         </ul>
                     </div>
@@ -86,14 +86,14 @@
         },
         computed: {
             ...mapState({
-                userName: state => state.Auth.isEmployee,
+                userName: state => state.Auth.isUser,
                 fullName: state => state.Auth.is_employee,
                 isAuthenticated: state => state.Auth.tokenEmployee
             }),
         },
         methods: {
-            isEmployeeLogout() {
-                return this.$store.dispatch('Auth/isEmployeeLogout');
+            isUserLogout() {
+                return this.$store.dispatch('Auth/isUserLogout');
             },
             sidebarDropdown() {
                 $(".sidebar-dropdown > a").click(function () {

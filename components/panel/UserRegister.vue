@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="register" style="display: block;" ref="register">
+    <div class="container" id="register" style="display: none;" ref="register">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-12">
@@ -10,7 +10,7 @@
                             <!---------------------validation------------------->
                             <div class="my-3" v-if="editMode">
                                 <!--//-->
-                                <div v-if="$v.first_name.$anyDirty">
+                                <div v-if="$v.user.first_name.$anyDirty">
                                     <div class="error alert-danger"
                                          v-if="!$v.user.first_name.required">First Name is
                                         required.
@@ -29,7 +29,7 @@
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.last_name.$anyDirty">
+                                <div v-if="$v.user.last_name.$anyDirty">
                                     <div class="error alert-danger"
                                          v-if="!$v.user.last_name.required">Last Name is
                                         required.
@@ -48,23 +48,26 @@
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.username.$anyDirty">
-                                    <div class="error alert-danger" v-if="!$v.user.username.required">Username is
+                                <div v-if="$v.user.username.$anyDirty">
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.username.required">Username is
                                         required.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.username.minLength">Username must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.username.minLength">Username must
                                         have at
                                         least
                                         {{ $v.user.username.$params.minLength.min }} letters.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.username.maxLength">Username must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.username.maxLength">Username must
                                         have at
                                         least
                                         {{ $v.user.username.$params.maxLength.max }} letters.
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.email.$anyDirty">
+                                <div v-if="$v.user.email.$anyDirty">
                                     <div class="error alert-danger"
                                          v-if="!$v.user.email.required">Email is required.
                                     </div>
@@ -91,16 +94,19 @@
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.home_phone.$anyDirty">
-                                    <div class="error alert-danger" v-if="!$v.user.home_phone.required">Home Phone is
+                                <div v-if="$v.user.home_phone.$anyDirty">
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.home_phone.required">Home Phone is
                                         required.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.home_phone.minLength">Home Phone must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.home_phone.minLength">Home Phone must
                                         have at
                                         least
                                         {{ $v.user.home_phone.$params.minLength.min }} letters.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.home_phone.maxLength">Home Phone must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.home_phone.maxLength">Home Phone must
                                         have at
                                         least
                                         {{ $v.user.home_phone.$params.maxLength.max }} letters.
@@ -108,22 +114,25 @@
                                 </div>
                                 <!--//-->
                                 <div v-if="$v.zip_code.$anyDirty">
-                                    <div class="error alert-danger" v-if="!$v.user.zip_code.required">Zip Code is
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.zip_code.required">Zip Code is
                                         required.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.zip_code.minLength">Zip Code must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.zip_code.minLength">Zip Code must
                                         have at
                                         least
                                         {{ $v.user.zip_code.$params.minLength.min }} letters.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.zip_code.maxLength">Zip Code must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.zip_code.maxLength">Zip Code must
                                         have at
                                         least
                                         {{ $v.user.zip_code.$params.maxLength.max }} letters.
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.password.$anyDirty">
+                                <div v-if="$v.user.password.$anyDirty">
                                     <div class="error alert-danger"
                                          v-if="!$v.user.password.required">Password is
                                         required.
@@ -134,25 +143,29 @@
                                         least
                                         {{ $v.user.password.$params.minLength.min }} letters.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.password.maxLength">Password must
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.password.maxLength">Password must
                                         have at
                                         least
                                         {{ $v.user.password.$params.maxLength.max }} letters.
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.confirmation_password.$anyDirty">
-                                    <div class="error alert-danger" v-if="!$v.user.confirmation_password.required">
+                                <div v-if="$v.user.confirmation_password.$anyDirty">
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.confirmation_password.required">
                                         Password Confirmation is
                                         required.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.confirmation_password.minLength">Last
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.confirmation_password.minLength">Last
                                         Password Confirmation
                                         must have at
                                         least
                                         {{ $v.user.confirmation_password.$params.minLength.min }} letters.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.confirmation_password.maxLength">
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.confirmation_password.maxLength">
                                         Password Confirmation
                                         must have at
                                         least
@@ -160,17 +173,20 @@
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.home_address.$anyDirty">
-                                    <div class="error alert-danger" v-if="!$v.user.home_address.required">Home Address
+                                <div v-if="$v.user.home_address.$anyDirty">
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.home_address.required">Home Address
                                         is
                                         required.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.home_address.minLength">Home Address
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.home_address.minLength">Home Address
                                         must have at
                                         least
                                         {{ $v.user.home_address.$params.minLength.min }} letters.
                                     </div>
-                                    <div class="error alert-danger" v-if="!$v.user.home_address.maxLength">Home Address
+                                    <div class="error alert-danger"
+                                         v-if="!$v.user.home_address.maxLength">Home Address
                                         must have
                                         at
                                         least
@@ -178,7 +194,7 @@
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.work_address.$anyDirty">
+                                <div v-if="$v.user.work_address.$anyDirty">
                                     <div class="error alert-danger"
                                          v-if="!$v.user.work_address.required">Work Address is
                                         required.
@@ -198,14 +214,14 @@
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.state.$anyDirty">
+                                <div v-if="$v.user.state.$anyDirty">
                                     <div class="error alert-danger"
                                          v-if="!$v.user.state.required">Status is
                                         required.
                                     </div>
                                 </div>
                                 <!--//-->
-                                <div v-if="$v.image.$anyDirty">
+                                <div v-if="$v.user.image.$anyDirty">
                                     <div class="error alert-danger" v-if="!$v.user.image.required">Image is
                                         required.
                                     </div>
@@ -392,6 +408,7 @@
                             <!---------------------end validation------------------->
                             <div class="row">
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.user.first_name.$error }"
@@ -400,6 +417,7 @@
                                                id="first-name"
                                                class="form-control" placeholder="First Name">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.first_name.$error }"
@@ -408,8 +426,10 @@
                                                id="first-name"
                                                class="form-control" placeholder="First Name">
                                     </div>
+                                    <!--//-->
                                 </div>
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.user.last_name.$error }"
@@ -417,6 +437,7 @@
                                                id="last-name"
                                                class="form-control" placeholder="Last Name">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.last_name.$error }"
@@ -424,6 +445,7 @@
                                                id="last-name"
                                                class="form-control" placeholder="Last Name">
                                     </div>
+                                    <!--//-->
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group" v-if="editMode">
@@ -444,45 +466,56 @@
                                     </div>
                                 </div>
                             </div>
-
+                            <!--//-->
                             <div class="row">
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="email"
                                                :class="{ 'form-group--error': $v.user.email.$error }"
                                                v-model.trim="$v.user.email.$model"
                                                name="email"
                                                id="email"
-                                               class="form-control" placeholder="Email">
+                                               class="form-control"
+                                               placeholder="Email">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="email"
                                                :class="{ 'form-group--error': $v.email.$error }"
                                                v-model.trim="$v.email.$model"
                                                name="email"
                                                id="email"
-                                               class="form-control" placeholder="Email">
+                                               class="form-control"
+                                               placeholder="Email">
                                     </div>
                                 </div>
+                                <!--//-->
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="number"
                                                :class="{ 'form-group--error': $v.user.mobile.$error }"
                                                v-model.trim="$v.user.mobile.$model"
                                                name="mobile"
                                                id="mobile"
-                                               class="form-control" placeholder="Mobile">
+                                               class="form-control"
+                                               placeholder="Mobile">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="number"
                                                :class="{ 'form-group--error': $v.mobile.$error }"
                                                v-model.trim="$v.mobile.$model"
                                                name="mobile"
                                                id="mobile"
-                                               class="form-control" placeholder="Mobile">
+                                               class="form-control"
+                                               placeholder="Mobile">
                                     </div>
+                                    <!--//-->
                                 </div>
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.user.home_phone.$error }"
@@ -492,6 +525,7 @@
                                                class="form-control"
                                                placeholder="Home Phone">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.home_phone.$error }"
@@ -501,11 +535,13 @@
                                                class="form-control"
                                                placeholder="Home Phone">
                                     </div>
+                                    <!--//-->
                                 </div>
                             </div>
-
+                            <!--//-->
                             <div class="row">
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.user.zip_code.$error }"
@@ -515,6 +551,7 @@
                                                class="form-control"
                                                placeholder="Zip Code">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="text"
                                                :class="{ 'form-group--error': $v.zip_code.$error }"
@@ -524,8 +561,10 @@
                                                class="form-control"
                                                placeholder="Zip Code">
                                     </div>
+                                    <!--//-->
                                 </div>
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="password"
                                                :class="{ 'form-group--error': $v.user.password.$error }"
@@ -535,6 +574,7 @@
                                                class="form-control"
                                                placeholder="Password">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="password"
                                                :class="{ 'form-group--error': $v.password.$error }"
@@ -544,8 +584,10 @@
                                                class="form-control"
                                                placeholder="Password">
                                     </div>
+                                    <!--//-->
                                 </div>
                                 <div class="col-md-4">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                         <input type="password"
                                                :class="{ 'form-group--error': $v.user.confirmation_password.$error }"
@@ -555,19 +597,23 @@
                                                class="form-control"
                                                placeholder="Password Confirmation">
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <input type="password"
                                                :class="{ 'form-group--error': $v.confirmation_password.$error }"
                                                v-model.trim="$v.confirmation_password.$model"
                                                name="confirmation_password"
                                                id="confirmation-password"
-                                               class="form-control" placeholder="Password Confirmation">
+                                               class="form-control"
+                                               placeholder="Password Confirmation">
                                     </div>
+                                    <!--//-->
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="col-md-12">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                     <textarea :class="{ 'form-group--error': $v.user.home_address.$error }"
                                               v-model.trim="$v.user.home_address.$model"
@@ -578,6 +624,7 @@
                                               rows="3">
                                     </textarea>
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                     <textarea :class="{ 'form-group--error': $v.home_address.$error }"
                                               v-model.trim="$v.home_address.$model"
@@ -588,11 +635,13 @@
                                               rows="3">
                                     </textarea>
                                     </div>
+                                    <!--//-->
                                 </div>
                             </div>
-
+                            <!--//-->
                             <div class="row">
                                 <div class="col-md-12">
+                                    <!--//-->
                                     <div class="form-group" v-if="editMode">
                                     <textarea :class="{ 'form-group--error': $v.user.work_address.$error }"
                                               v-model.trim="$v.user.work_address.$model"
@@ -602,6 +651,7 @@
                                               placeholder="Work Address"
                                               rows="3"></textarea>
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                     <textarea :class="{ 'form-group--error': $v.work_address.$error }"
                                               v-model.trim="$v.work_address.$model"
@@ -610,18 +660,20 @@
                                               class="form-control"
                                               placeholder="Work Address" rows="3"></textarea>
                                     </div>
+                                    <!--//-->
                                 </div>
                             </div>
-
+                            <!--//-->
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
 
                                     </div>
                                 </div>
-
+                                <!--//-->
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <!--//-->
                                         <div class="form-check" v-if="editMode">
                                             <input class="form-check-input"
                                                    type="radio"
@@ -634,6 +686,7 @@
                                                 ACTIVE
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-else>
                                             <input class="form-check-input"
                                                    type="radio"
@@ -645,6 +698,7 @@
                                                 ACTIVE
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-if="editMode">
                                             <input class="form-check-input"
                                                    type="radio"
@@ -657,6 +711,7 @@
                                                 INACTIVE
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-else>
                                             <input class="form-check-input"
                                                    type="radio"
@@ -668,6 +723,7 @@
                                                 INACTIVE
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-if="editMode">
                                             <input class="form-check-input"
                                                    type="radio"
@@ -680,6 +736,7 @@
                                                 SUSPENDED
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-else>
                                             <input class="form-check-input"
                                                    type="radio"
@@ -691,6 +748,7 @@
                                                 SUSPENDED
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-if="editMode">
                                             <input class="form-check-input"
                                                    type="radio"
@@ -703,6 +761,7 @@
                                                 PENDING
                                             </label>
                                         </div>
+                                        <!--//-->
                                         <div class="form-check" v-else>
                                             <input class="form-check-input"
                                                    type="radio"
@@ -715,9 +774,10 @@
                                                 PENDING
                                             </label>
                                         </div>
+                                        <!--//-->
                                     </div>
                                 </div>
-
+                                <!--//-->
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <input type="file"
@@ -731,14 +791,17 @@
                                              style="width: 100px; height: 100px">
                                     </div>
                                 </div>
-
+                                <!--//-->
                             </div>
                             <!--//-->
                             <div class="row">
                                 <div class="col-md-6">
+                                    <!--//-->
+                                    <!--:class="{ 'form-group&#45;&#45;error': $v.user.permission.$error }"
+                                    v-model.trim="$v.user.permission.$model"-->
                                     <div class="form-group" v-if="editMode">
-                                        <select :class="{ 'form-group--error': $v.user.permission.$error }"
-                                                v-model.trim="$v.user.permission.$model"
+                                        <select
+                                                v-model="user.permission"
                                                 name="permission"
                                                 id="permission"
                                                 class="form-control"
@@ -752,6 +815,7 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <!--//-->
                                     <div class="form-group" v-else>
                                         <h4>Please Select Permissions</h4>
                                         <select v-model="permission"
@@ -766,18 +830,23 @@
                                             </option>
                                         </select>
                                     </div>
+                                    <!--//-->
                                 </div>
                                 <!--//-->
                                 <div class="col-md-6">
                                     <div class="form-group" v-if="editMode">
-                                        <select :class="{ 'form-group--error': $v.user.role.$error }"
-                                                v-model.trim="$v.user.role.$model"
+                                        <!--:class="{ 'form-group&#45;&#45;error': $v.user.role.$error }"
+                                        v-model.trim="$v.user.role.$model"-->
+                                        <select
+                                                v-model="user.role"
                                                 name="role"
                                                 id="role"
                                                 class="form-control"
                                                 multiple="multiple">
-                                            <option multiple="multiple" value="" selected disabled hidden>Please Select
-                                                Role
+                                            <option multiple="multiple"
+                                                    value=""
+                                                    selected disabled hidden>
+                                                Please Select Role
                                             </option>
                                             <option v-for="role in roles"
                                                     :value="role.id"
@@ -860,7 +929,7 @@
             }
         },
         validations: {
-            employee: {
+            user: {
                 first_name: {
                     required,
                     minLength: minLength(2),
@@ -921,6 +990,12 @@
                 image: {
                     required,
                 },
+                /*permission: {
+                    required
+                },
+                role: {
+                    required
+                }*/
             },
             first_name: {
                 required,
@@ -991,6 +1066,7 @@
         },
         props: ['user', 'editMode'],
         mounted() {
+            //alert(this.$v.$touch());
             return this.$store.dispatch('Roles/allPermissions')
                 .then(() => {
                     this.$store.dispatch('Roles/allRoles');
@@ -1062,7 +1138,7 @@
                     })
                 //}
             },
-            /*userUpdate(user) {
+            userUpdate(user) {
                 const isUpdate = {
                     id: user.id,
                     first_name: user.first_name,
@@ -1076,9 +1152,12 @@
                     confirmation_password: user.confirmation_password,
                     home_address: user.home_address,
                     work_address: user.work_address,
+                    image: this.image,
+                    role: user.role,
+                    permission: user.permission,
                 };
                 return this.$store.dispatch('Users/isUserUpdate', isUpdate)
-            },*/
+            },
         }
     }
 </script>

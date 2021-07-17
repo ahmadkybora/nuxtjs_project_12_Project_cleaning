@@ -8,29 +8,12 @@ const state = () => ({
     permissions: window.localStorage.getItem('permissions'),
     forgetPassword: window.localStorage.getItem('forget-password'),
 
-    /*tokenEmployee: window.localStorage.getItem('token-employee'),
-    tokenUser: window.localStorage.getItem('token-user'),
-    isUser: window.localStorage.getItem('is-user'),
-    //username: window.localStorage.getItem('username'),
-    //full_name: window.localStorage.getItem('full_name'),
-    is_employee: window.localStorage.getItem('is-employee'),
-    isEmployee: window.localStorage.getItem('is-admin'),*/
-    /*roles: window.localStorage.getItem('is-admin'),
-    permissions: window.localStorage.getItem('permissions'),*/
-    /*myPermissions: {},
-    isEmployeeLogin: {
-        first_name: '',
-        last_name: '',
-        username: '',
-    },
-    isEmployeeRegister: {},
-    isUserLogin: {
-        first_name: '',
-        last_name: '',
-        username: '',
-    },
-    isUserRegister: {},*/
-    //forgetPassword: window.localStorage.getItem('forget-password')
+    /*isAdmin: '',
+    username: '',
+    full_name: '',
+    roles: '',
+    permissions: '',
+    forgetPassword: '',*/
 });
 
 const getters = {
@@ -53,27 +36,10 @@ const getters = {
         return state.forgetPassword
     },
     myPermissions(state) {
-        //console.log(state.myPermissions);
         return state.myPermissions
     },
     isAuthenticated(state) {
         return state.auth.loggedIn
-    },
-    loggedInUser(state) {
-        return state.auth.user
-    },
-
-    isAuthenticatedUser(state) {
-        return state.tokenUser
-    },
-    isAuthenticatedEmployee(state) {
-        return state.tokenEmployee
-    },
-    fullNameUser(state) {
-        return state.isUserLogin.first_name + ' ' + state.isUserLogin.last_name;
-    },
-    fullNameEmployee(state) {
-        return state.isEmployeeLogin.first_name + ' ' + state.isEmployeeLogin.last_name;
     },
     getUsers(state) {
         return state.forgetPassword
@@ -112,6 +78,57 @@ const actions = {
             })
     },
 
+    async isAdminLogin(context, payload) {
+        const login = {
+            google_rECAPTCHA: payload.google_rECAPTCHA,
+            username: payload.username,
+            password: payload.password,
+        };
+
+        await this.$axios.post('login', login)
+            .then(async (result) => {
+                if (result) {
+                    const auth = await this.$auth.loginWith('local',
+                        {data: login}
+                    );
+                    if (auth) {
+                        const isAdmin = auth.data.data.isAdmin;
+                        const username = auth.data.data.username;
+                        const full_name = auth.data.data.first_name + ' ' + auth.data.data.last_name;
+                        const token = auth.data.data.accessToken;
+                        const roles = auth.data.data.roles;
+                        const permissions = auth.data.data.permissions;
+
+                        /*context.commit('isAdmin', isAdmin);
+                        context.commit('username', username);
+                        context.commit('full_name', full_name);
+                        context.commit('roles', roles);
+                        context.commit('permissions', permissions);*/
+
+                        window.localStorage.setItem('is-admin', isAdmin);
+                        window.localStorage.setItem('username', username);
+                        window.localStorage.setItem('full-name', full_name);
+                        window.localStorage.setItem('roles', roles);
+
+                        let myPermissions = [];
+                        for (let i = 0; i < permissions.length; i++) {
+                            myPermissions[i] = permissions[i].permissionId;
+                        }
+
+                        window.localStorage.setItem('permissions', myPermissions);
+                        await this.$auth.setUser(username);
+                        await this.$auth.setUserToken(token);
+
+                        return this.$router.push('dashboard');
+                    }
+                }
+            })
+            .catch(async err => {
+                await error(err);
+                return this.$router.push('errors/401')
+            });
+    },
+
     /**
      *
      * @param context
@@ -139,24 +156,31 @@ const actions = {
                         const roles = auth.data.data.roles;
                         const permissions = auth.data.data.permissions;
 
-                        context.commit('isAdmin', isAdmin);
+                        /*context.commit('isAdmin', isAdmin);
                         context.commit('username', username);
                         context.commit('full_name', full_name);
                         context.commit('roles', roles);
-                        context.commit('permissions', permissions);
+                        context.commit('permissions', permissions);*/
 
                         window.localStorage.setItem('is-admin', isAdmin);
                         window.localStorage.setItem('username', username);
                         window.localStorage.setItem('full-name', full_name);
                         window.localStorage.setItem('roles', roles);
-                        window.localStorage.setItem('permissions', permissions);
 
+                        let myPermissions = [];
+                        for (let i = 0; i < permissions.length; i++) {
+                            myPermissions[i] = permissions[i].Permission.name;
+                        }
+
+                        window.localStorage.setItem('permissions', myPermissions);
                         await this.$auth.setUser(username);
                         await this.$auth.setUserToken(token);
 
-                        if (isAdmin === true)
-                            await this.$router.push('panel/dashboard');
-                        await this.$router.push('/')
+                        if (isAdmin === true) {
+                            return this.$router.push('panel/dashboard');
+                        } else {
+                            return this.$router.push('/');
+                        }
                     }
                 }
             })
@@ -175,12 +199,24 @@ const actions = {
         await this.$axios.get('logout')
             .then(async result => {
                 if (result) {
-                    window.localStorage.removeItem('username');
-                    window.localStorage.removeItem('full_name');
-
-                    delete window.localStorage.getItem('username');
-                    delete window.localStorage.getItem('full_name');
                     await this.$auth.logout();
+                    window.localStorage.removeItem('is-admin');
+                    window.localStorage.removeItem('username');
+                    window.localStorage.removeItem('full-name');
+                    window.localStorage.removeItem('roles');
+                    window.localStorage.removeItem('permissions');
+
+                    /*const isAdmin = context.isAdmin;
+                    const username = context.username;
+                    const full_name = context.full_name;
+                    const roles = context.roles;
+                    const permissions = context.permissions;
+
+                    context.commit('isAdmin', isAdmin);
+                    context.commit('username', username);
+                    context.commit('full_name', full_name);
+                    context.commit('roles', roles);
+                    context.commit('permissions', permissions);*/
                 }
             })
             .catch(err => {
@@ -266,21 +302,10 @@ const mutations = {
     accessToken(state, payload) {
         state.token = payload.token
     },
-    isEmployeeRegister(state, payload) {
-        state.status = 'success';
-        state.token = payload.token;
-        state.user = payload.user;
-    },
-    isEmployeeLogin(state, payload) {
-        state.isEmployeeLogin = payload;
-    },
     isUserRegister(state, payload) {
         state.status = 'success';
         state.token = payload.token;
         state.user = payload.user;
-    },
-    isEmployeeLogout(state) {
-        state.tokenEmployee = '';
     },
     isUserLogin(state, payload) {
         state.isAdmin = payload.isAdmin;

@@ -14,7 +14,10 @@
                         <button @click="registerUser()" class="btn btn-success">
                             <span><i class="fa fa-user-plus"></i>Register</span>
                         </button>
-                        <button id="close" ref="closeRegister" class="btn btn-danger" @click="closeModal()">close
+                        <button id="close"
+                                ref="closeRegister"
+                                class="btn btn-primary"
+                                @click="closeModal()">open
                         </button>
                     </div>
                 </div>

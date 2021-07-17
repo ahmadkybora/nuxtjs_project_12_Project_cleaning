@@ -66,7 +66,7 @@
           username: this.username,
           password: this.password,
         };
-        return this.$store.dispatch('Auth/isUserLogin', Login);
+        return this.$store.dispatch('Auth/isAdminLogin', Login);
       },
       // beforeDestroy() {
       //     this.$recaptcha.destroy()

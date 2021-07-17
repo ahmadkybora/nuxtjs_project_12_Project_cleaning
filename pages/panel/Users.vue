@@ -14,8 +14,13 @@
                         <button @click="registerUser()" class="btn btn-success">
                             <span><i class="fa fa-user-plus"></i>Register</span>
                         </button>
-                        <button id="close" ref="closeRegister" class="btn btn-danger" @click="closeModal()">close
+                        <!--//-->
+                        <button id="close"
+                                ref="closeRegister"
+                                class="btn btn-primary"
+                                @click="closeModal()">open
                         </button>
+                        <!--//-->
                     </div>
                 </div>
             </div>
@@ -76,7 +81,8 @@
                     </td>
                     <td>{{ user.createdAt + ' ' + user.updatedAt }}</td>
                     <td>
-                        <a v-if="hasPermissionViewUser === viewUser"
+                        <a href="javascript:void(0)"
+                           v-if="hasPermissionViewUser === viewUser"
                            @click="userShow(user)"
                            data-toggle="modal"
                            data-target="#exampleModal">
@@ -86,11 +92,14 @@
                                   :showUser="showUser">
                         </UserShow>
                         /
-                        <a v-if="hasPermissionUpdateUser === updateUser"
-                           href="#register" @click="userEdit(user)"><i class="fas fa-pen text-success"></i>
+                        <a href="javascript:void(0)"
+                           v-if="hasPermissionUpdateUser === updateUser"
+                           @click="userEdit(user)">
+                            <i class="fas fa-pen text-success"></i>
                         </a>
                         /
-                        <a v-if="hasPermissionDestroyUser === destroyUser"
+                        <a href="javascript:void(0)"
+                           v-if="hasPermissionDestroyUser === destroyUser"
                            @click="userDelete(user.id)">
                             <i class="fas fa-trash text-danger"></i>
                         </a>
@@ -124,7 +133,9 @@
                     <li v-for="page in pages"
                         id="colorBtn"
                         class="page-item">
-                        <a @click.prevent="changePage(page)" class="page-link" href="#">{{ page }}</a>
+                        <a @click.prevent="changePage(page)"
+                           class="page-link"
+                           href="#">{{ page }}</a>
                     </li>
                     <li v-if="current_page < last_page" class="page-item">
                         <a @click.prevent="changePage(current_page + 1)" class="page-link"
@@ -178,10 +189,9 @@
             }
         },
         mounted() {
-            console.log(this.hasPermissionCreateUser);
             return this.$store.dispatch('Users/getUsers')
                 .then(() => {
-                    this.$store.dispatch('Auth/isEmployeeLogin')
+                    this.$store.dispatch('Auth/isUserLogin')
                 });
         },
         computed: {
@@ -273,6 +283,7 @@
             userEdit(user) {
                 this.editMode = true;
                 this.user = user;
+                $('#register').toggle();
             },
             userDelete(id) {
                 return this.$store.dispatch('Users/deleteUser', {id});
@@ -280,7 +291,7 @@
             registerUser() {
                 this.editMode = false;
                 this.user = '';
-                $('#user-register').toggle();
+                $('#register').toggle();
             },
             onFullTextSearch() {
                 const full_text_search = this.full_text_search;

@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="register" style="display: block;" ref="register">
+    <div class="container" id="register" style="display: none;" ref="register">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-12">
@@ -8,22 +8,6 @@
                         <h3 v-if="editMode">Update Employees</h3>
 
                         <form @submit.prevent="editMode ? employeeUpdate(employee) : createEmployee()">
-                            <!--//-->
-                            <!--<div v-if="$v.first_name.$anyDirty">
-                                <div class="error mt-1 mr-2" v-if="!$v.first_name.required">
-                                    First Name is required.
-                                </div>
-                                <div class="error mt-1 mr-1" v-if="$v.first_name">
-                                    First Name is ok.
-                                </div>
-                            </div>-->
-                            <!--//-->
-                            <!--<div>
-                                <input v-model="" :placeholder="$touch()"
-                                @blur="$v.first_name.$touch()"
-                                :danger="$v.first_name.$error && $v.first_name.$dirty"
-                                danger-text="invalid">
-                            </div>-->
                             <!---------------------validation------------------->
                             <div class="my-3" v-if="editMode">
                                 <!--//-->

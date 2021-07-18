@@ -48,6 +48,7 @@
                     <th>Full Name</th>
                     <th>UserName</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Image</th>
                     <th>Status</th>
                     <th>Created At / Updated At</th>
@@ -62,6 +63,9 @@
                     <td>{{ user.first_name + ' ' + user.last_name }}</td>
                     <td v-text="user.username"></td>
                     <td v-text="user.email"></td>
+                    <td v-for="(role, index) in user.RoleUsers">
+                        {{ user.RoleUsers[index].Role.name }}
+                    </td>
                     <td>
                         <img class="rounded-circle" :src="user.image" style="width: 50px; height: 50px">
                     </td>
@@ -81,28 +85,39 @@
                     </td>
                     <td>{{ user.createdAt + ' ' + user.updatedAt }}</td>
                     <td>
-                        <a href="javascript:void(0)"
-                           v-if="hasPermissionViewUser === viewUser"
-                           @click="userShow(user)"
-                           data-toggle="modal"
-                           data-target="#exampleModal">
-                            <i class="fas fa-eye text-primary"></i>
-                        </a>
-                        <UserShow v-if="hasPermissionViewUser ===viewUser"
-                                  :showUser="showUser">
-                        </UserShow>
-                        /
-                        <a href="javascript:void(0)"
-                           v-if="hasPermissionUpdateUser === updateUser"
-                           @click="userEdit(user)">
-                            <i class="fas fa-pen text-success"></i>
-                        </a>
-                        /
-                        <a href="javascript:void(0)"
-                           v-if="hasPermissionDestroyUser === destroyUser"
-                           @click="userDelete(user.id)">
-                            <i class="fas fa-trash text-danger"></i>
-                        </a>
+                        <div class="col">
+                            <div class="row">
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionViewUser === viewUser"
+                                   @click="userShow(user)"
+                                   data-toggle="modal"
+                                   data-target="#exampleModal">
+                                    <i class="fas fa-eye text-primary"></i>
+                                </a>
+                                /
+                                <UserShow v-if="hasPermissionViewUser ===viewUser"
+                                          :showUser="showUser">
+                                </UserShow>
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionUpdateUser === updateUser"
+                                   @click="userEdit(user)">
+                                    <i class="fas fa-pen text-success"></i>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionDestroyUser === destroyUser"
+                                   @click="userDelete(user.id)">
+                                    <i class="fas fa-trash text-danger"></i>
+                                </a>
+                                /
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionDestroyUser === destroyUser"
+                                   @click="Acl(user.id)">
+                                    <i class="fas fa-balance-scale text-warning"></i>
+                                </a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -112,6 +127,7 @@
                     <th>Full Name</th>
                     <th>UserName</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Image</th>
                     <th>Status</th>
                     <th>Created At / Updated At</th>
@@ -154,6 +170,7 @@
     import $ from 'jquery';
     import UserRegister from '../../components/panel/UserRegister';
     import UserShow from '../../components/panel/modal/UserShow';
+    import Acl from '../../pages/panel/Acl';
     import HelperFunctions from '../../helpers/HelperFunctions';
 
     import {mapState} from 'vuex'
@@ -163,7 +180,7 @@
         //middleware: 'checkAuthEmployee',
         layout: 'panel',
         name: "Users",
-        components: {UserRegister, UserShow},
+        components: {UserRegister, UserShow, Acl},
         data() {
             return {
                 allUser: 'all-user',
@@ -287,6 +304,9 @@
             },
             userDelete(id) {
                 return this.$store.dispatch('Users/deleteUser', {id});
+            },
+            Acl(id) {
+                return this.$store.dispatch('Acl/isPermissions', {id});
             },
             registerUser() {
                 this.editMode = false;

@@ -1,6 +1,7 @@
 import {success, error} from '../../helpers/ErrorHandler';
 
 const state = () => ({
+    getEmployees: {},
     getUsers: {},
     isUser: {},
     myUser: {},
@@ -10,6 +11,9 @@ const state = () => ({
 const getters = {
     getUsers(state) {
         return state.getUsers
+    },
+    getEmployees(state) {
+        return state.getEmployees
     },
     isUser(state) {
         return state.isUser
@@ -23,6 +27,23 @@ const actions = {
     | Panel Part
     |--------------------------------------------------------------------------
     */
+    /**
+     *
+     * @param context
+     * @param page
+     * @returns {Promise<void>}
+     */
+    async getEmployees(context, page = 1) {
+        await this.$axios.get(`panel/employees?page=${page}`)
+            .then(res => {
+                //success(res);
+                const getEmployees = res.data.data;
+                context.commit('getEmployees', getEmployees);
+            }).catch(err => {
+                error(err);
+            })
+    },
+
     /**
      *
      * @param context
@@ -124,6 +145,8 @@ const actions = {
      */
     async isUserUpdate(context, payload) {
         let formData = new FormData();
+
+        formData.append("id", payload.id);
         formData.append("first_name", payload.first_name);
         formData.append("last_name", payload.last_name);
         formData.append("username", payload.username);
@@ -143,8 +166,9 @@ const actions = {
             .then(async res => {
                 const getUsers = await res.data.data;
                 context.commit('getUsers', getUsers);
-            }).catch(err => {
-                error(err);
+                await success(res);
+            }).catch(async err => {
+                await error(err);
             })
     },
 
@@ -234,11 +258,12 @@ const actions = {
                 'Content-Type': 'multipart/form-data'
             }
         })
-            .then(res => {
+            .then(async res => {
                 const myUser = res.data.data;
                 context.commit('myUser', myUser);
-            }).catch(err => {
-                error(err);
+                await success(res);
+            }).catch(async err => {
+                await error(err);
             })
     },
 
@@ -278,6 +303,9 @@ const mutations = {
     },
     getUsers(state, payload) {
         state.getUsers = payload
+    },
+    getEmployees(state, payload) {
+        state.getEmployees = payload
     },
     showUser(state, payload) {
         state.isUser = payload

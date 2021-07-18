@@ -1,5 +1,5 @@
 <template>
-    <div class="container" id="register" style="display: block;" ref="register">
+    <div class="container" id="register" style="display: none;" ref="register">
         <div class="container mt-5">
             <div class="row">
                 <div class="col-md-12">

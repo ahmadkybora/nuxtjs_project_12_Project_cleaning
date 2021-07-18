@@ -35,7 +35,7 @@
                     <div class="sidebar-menu">
                         <ul v-for="item in items" :key="item.id">
                             <li @click="sidebarDropdown()" class="sidebar-dropdown">
-                                <a href="#">
+                                <a href="javascript:void(0)">
                                     <i :class="item.titleIcon"></i>
                                     <span v-text="item.title"></span>
                                 </a>

@@ -1,7 +1,8 @@
 <template>
     <div class="container">
         <!--UserRegister-->
-        <EmployeeRegister v-if="hasPermissionCreateEmployee === createEmployee" :employee="employee" :editMode="editMode"></EmployeeRegister>
+        <EmployeeRegister v-if="hasPermissionCreateEmployee === createEmployee" :employee="employee"
+                          :editMode="editMode"></EmployeeRegister>
         <!--//-->
         <div class="row">
             <!--//-->
@@ -14,8 +15,13 @@
                         <button @click="registerEmployee()" class="btn btn-success">
                             <span><i class="fa fa-user-plus"></i>Register</span>
                         </button>
-                        <button id="close" ref="closeRegister" class="btn btn-danger" @click="closeModal()">close
+                        <!--//-->
+                        <button id="close"
+                                ref="closeRegister"
+                                class="btn btn-primary"
+                                @click="closeModal()">open
                         </button>
+                        <!--//-->
                     </div>
                 </div>
             </div>
@@ -43,6 +49,7 @@
                     <th>Full Name</th>
                     <th>UserName</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Image</th>
                     <th>Status</th>
                     <th>Created At / Updated At</th>
@@ -57,43 +64,65 @@
                     <td>{{ employee.first_name + ' ' + employee.last_name }}</td>
                     <td v-text="employee.username"></td>
                     <td v-text="employee.email"></td>
+                    <td v-for="(role, index) in employee.RoleUsers">
+                        {{ employee.RoleUsers[index].Role.name }}
+                    </td>
                     <td>
                         <img class="rounded-circle" :src="employee.image" style="width: 50px; height: 50px">
                     </td>
                     <td>
-                        <button v-if="employee.state === 'ACTIVE'" class="btn btn-success btn-sm disabled"
+                        <button v-if="employee.state === 'ACTIVE'"
+                                class="btn btn-success btn-sm disabled"
                                 v-text="employee.state">ACTIVE
                         </button>
-                        <button v-if="employee.state === 'INACTIVE'" class="btn btn-warning btn-sm disabled"
+                        <button v-if="employee.state === 'INACTIVE'"
+                                class="btn btn-warning btn-sm disabled"
                                 v-text="employee.state">INACTIVE
                         </button>
-                        <button v-if="employee.state === 'SUSPENDED'" class="btn btn-secondary btn-sm disabled"
+                        <button v-if="employee.state === 'SUSPENDED'"
+                                class="btn btn-secondary btn-sm disabled"
                                 v-text="employee.state">SUSPENDED
                         </button>
-                        <button v-if="employee.state === 'PENDING'" class="btn btn-danger btn-sm disabled"
+                        <button v-if="employee.state === 'PENDING'"
+                                class="btn btn-danger btn-sm disabled"
                                 v-text="employee.state">PENDING
                         </button>
                     </td>
                     <td>{{ employee.createdAt + ' ' + employee.updatedAt }}</td>
                     <td>
-                        <a v-if="hasPermissionViewEmployee === viewEmployee"
-                           @click="employeeShow(employee)"
-                           data-toggle="modal"
-                           data-target="#exampleModal">
-                            <i class="fas fa-eye text-primary"></i>
-                        </a>
-                        <EmployeeShow v-if="hasPermissionViewEmployee === viewEmployee"
-                                      :showEmployee="showEmployee">
-                        </EmployeeShow>
-                        /
-                        <a v-if="hasPermissionUpdateEmployee === updateEmployee"
-                           href="#register"
-                           @click="employeeEdit(employee)"><i class="fas fa-pen text-success"></i>
-                        </a>
-                        /
-                        <a v-if="hasPermissionDestroyEmployee === destroyEmployee"
-                           @click="employeeDelete(employee.id)"><i class="fas fa-trash text-danger"></i>
-                        </a>
+                        <div class="col">
+                            <div class="row">
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionViewEmployee === viewEmployee"
+                                   @click="userShow(employee)"
+                                   data-toggle="modal"
+                                   data-target="#exampleModal">
+                                    <i class="fas fa-eye text-primary"></i>
+                                </a>
+                                /
+                                <!--<UserShow v-if="hasPermissionViewUser ===viewUser"
+                                          :showUser="showUser">
+                                </UserShow>-->
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionUpdateEmployee === updateEmployee"
+                                   @click="EmployeeEdit(employee)">
+                                    <i class="fas fa-pen text-success"></i>
+                                </a>
+                            </div>
+                            <div class="row">
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionDestroyEmployee === destroyEmployee"
+                                   @click="EmployeeDelete(employee.id)">
+                                    <i class="fas fa-trash text-danger"></i>
+                                </a>
+                                /
+                                <a href="javascript:void(0)"
+                                   v-if="hasPermissionDestroyEmployee === destroyEmployee"
+                                   @click="Acl(employee.id)">
+                                    <i class="fas fa-balance-scale text-warning"></i>
+                                </a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
                 </tbody>
@@ -103,6 +132,7 @@
                     <th>Full Name</th>
                     <th>UserName</th>
                     <th>Email</th>
+                    <th>Role</th>
                     <th>Image</th>
                     <th>Status</th>
                     <th>Created At / Updated At</th>
@@ -175,17 +205,17 @@
             }
         },
         mounted() {
-            return this.$store.dispatch('Employees/getEmployees');
+            return this.$store.dispatch('Users/getEmployees');
         },
         computed: {
             ...mapState({
-                employees: state => state.Employees.getEmployees,
-                per_page: state => state.Employees.getEmployees.per_page,
-                last_page: state => state.Employees.getEmployees.last_page,
-                from: state => state.Employees.getEmployees.from,
-                to: state => state.Employees.getEmployees.to,
-                current_page: state => state.Employees.getEmployees.current_page,
-                total: state => state.Employees.getEmployees.total,
+                employees: state => state.Users.getEmployees,
+                per_page: state => state.Users.getUsers.per_page,
+                last_page: state => state.Users.getUsers.last_page,
+                from: state => state.Users.getUsers.from,
+                to: state => state.Users.getUsers.to,
+                current_page: state => state.Users.getUsers.current_page,
+                total: state => state.Users.getUsers.total,
             }),
             pages() {
                 let pagesArray = [];
@@ -227,7 +257,7 @@
         methods: {
             changePage(page) {
                 //this.current_page = page;
-                return this.$store.dispatch('Employees/getEmployees', page);
+                return this.$store.dispatch('Users/getEmployees', page);
             },
             closeModal() {
                 HelperFunctions.closeModal();
@@ -243,18 +273,22 @@
             employeeEdit(employee) {
                 this.editMode = true;
                 this.employee = employee;
+                $('#register').toggle();
             },
             employeeDelete(id) {
-                return this.$store.dispatch('Employees/deleteEmployee', {id});
+                return this.$store.dispatch('Users/deleteUser', {id});
+            },
+            Acl(id) {
+                return this.$store.dispatch('Acl/isPermissions', {id});
             },
             registerEmployee() {
                 this.editMode = false;
                 this.employee = '';
-                $('#user-register').toggle();
+                $('#register').toggle();
             },
             onFullTextSearch() {
                 const full_text_search = this.full_text_search;
-                return this.$store.dispatch('Employees/searchEmployee', {full_text_search});
+                return this.$store.dispatch('Employees/searchUser', {full_text_search});
             },
         }
     }

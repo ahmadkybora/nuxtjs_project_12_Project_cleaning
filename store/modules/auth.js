@@ -78,6 +78,12 @@ const actions = {
             })
     },
 
+    /**
+     *
+     * @param context
+     * @param payload
+     * @returns {Promise<void>}
+     */
     async isAdminLogin(context, payload) {
         const login = {
             google_rECAPTCHA: payload.google_rECAPTCHA,
@@ -112,14 +118,14 @@ const actions = {
 
                         let myPermissions = [];
                         for (let i = 0; i < permissions.length; i++) {
-                            myPermissions[i] = permissions[i].permissionId;
+                            myPermissions[i] = permissions[i].Permission.name;
                         }
 
                         window.localStorage.setItem('permissions', myPermissions);
                         await this.$auth.setUser(username);
                         await this.$auth.setUserToken(token);
 
-                        return this.$router.push('dashboard');
+                        return this.$router.push('panel/dashboard');
                     }
                 }
             })

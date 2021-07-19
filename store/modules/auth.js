@@ -114,14 +114,19 @@ const actions = {
                         window.localStorage.setItem('is-admin', isAdmin);
                         window.localStorage.setItem('username', username);
                         window.localStorage.setItem('full-name', full_name);
-                        window.localStorage.setItem('roles', roles);
+
+                        let myRoles = [];
+                        for (let i = 0; i < roles.length; i++) {
+                            myRoles[i] = roles[i].Role.name;
+                        }
+                        window.localStorage.setItem('roles', myRoles);
 
                         let myPermissions = [];
                         for (let i = 0; i < permissions.length; i++) {
                             myPermissions[i] = permissions[i].Permission.name;
                         }
-
                         window.localStorage.setItem('permissions', myPermissions);
+
                         await this.$auth.setUser(username);
                         await this.$auth.setUserToken(token);
 
@@ -171,14 +176,19 @@ const actions = {
                         window.localStorage.setItem('is-admin', isAdmin);
                         window.localStorage.setItem('username', username);
                         window.localStorage.setItem('full-name', full_name);
-                        window.localStorage.setItem('roles', roles);
+
+                        let myRoles = [];
+                        for (let i = 0; i < roles.length; i++) {
+                            myRoles[i] = roles[i].Role.name;
+                        }
+                        window.localStorage.setItem('roles', myRoles);
 
                         let myPermissions = [];
                         for (let i = 0; i < permissions.length; i++) {
                             myPermissions[i] = permissions[i].Permission.name;
                         }
-
                         window.localStorage.setItem('permissions', myPermissions);
+
                         await this.$auth.setUser(username);
                         await this.$auth.setUserToken(token);
 

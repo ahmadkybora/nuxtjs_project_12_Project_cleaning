@@ -1,5 +1,7 @@
 //const pkg = require('.package');
 //const bodyParser = require('body-parser');
+//const webpack = require('webpack');
+import webpack from 'webpack';
 
 export default {
     // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
@@ -22,10 +24,16 @@ export default {
     css: [],
 
     // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
+
     plugins: [
         //'@/plugins/axios.js',
         '@/plugins/index.js',
         '@/plugins/internal.js',
+        /*new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery',
+            'window.jQuery': 'jquery'
+        })*/
     ],
 
     // Auto import components: https://go.nuxtjs.dev/config-components
@@ -285,7 +293,17 @@ export default {
     content: {},
 
     // Build Configuration: https://go.nuxtjs.dev/config-build
-    build: {},
+    build: {
+        plugins: [
+            new webpack.ProvidePlugin({
+                // global modules
+                $: 'jquery',
+                jQuery: 'jquery',
+                'window.jQuery': 'jquery',
+                _: 'lodash',
+            })
+        ]
+    },
 
     /*
     router middleware log

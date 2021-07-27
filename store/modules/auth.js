@@ -130,7 +130,7 @@ const actions = {
                         await this.$auth.setUser(username);
                         await this.$auth.setUserToken(token);
 
-                        return this.$router.push('panel/dashboard');
+                        return this.$router.push('dashboard');
                     }
                 }
             })

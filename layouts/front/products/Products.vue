@@ -1,6 +1,6 @@
 <template>
-    <section class="bg-light my-3">
-        <div class="container">
+    <div class="container-fluid">
+        <div class="jumbotron">
             <h3 class="text-center">Products</h3>
             <!--//-->
             <form action="" class="form-inline w-50 m-auto">
@@ -17,53 +17,49 @@
                 </div>
             </form>
             <!--//-->
-            <div class="row my-5">
-                <carousel :autoplay="true" :nav="false">
-                    <div v-for="product in products" :key="product.id" class="col-md-2">
-                        <div class="card" style="width: 15rem; border-radius: 15px">
-                            <!--//-->
-                            <img v-if="loading"
-                                 class="card-img-top circle float-right"
-                                 src="../../../assets/loader.gif"
-                                 alt="Card image cap"
-                                 style="width: 230px; height:150px;">
-                            <!--//-->
-                            <img v-else
-                                 class="card-img-top
-                         float-right"
-                                 :src="product.image"
-                                 alt="Card image cap"
-                                 style="width: 230px; height:150px;">
-                            <!--//-->
-                            <!--<img v-else
-                                 class="card-img-top circle float-right"
-                                 src="https://placeimg.com/200/200/any?1"
-                                 alt="Card image cap"
-                                 style="width: 230px; height:150px;">-->
-                            <!--//-->
-                            <div class="card-body">
-                                <h5 class="card-title" v-text="product.title"></h5>
-                                <p class="card-text" v-text="product.description"></p>
-                                <p class="card-text">Price: {{ product.price }}</p>
-                            </div>
-                            <!--//-->
-                            <div class="card-footer">
-                                <div class="row">
-                                    <div class="col" v-for="item in items" :key="item.id">
+            <div class="owl-carousel owl-theme">
+                <div v-for="product in products" :key="product.id"
+                     class="card m-2" style="width: 15rem; border-radius: 15px">
+                    <!--//-->
+                    <img v-if="loading"
+                         class="card-img-top circle float-right"
+                         src="../../../assets/loader.gif"
+                         alt="Card image cap"
+                         style="width: 230px; height:150px;">
+                    <!--//-->
+                    <img v-else
+                         class="card-img-top float-right"
+                         :src="product.image"
+                         alt="Card image cap"
+                         style="width: 230px; height:150px;">
+                    <!--//-->
+                    <img v-else
+                         class="card-img-top circle float-right"
+                         src="https://placeimg.com/200/200/any?1"
+                         alt="Card image cap"
+                         style="width: 230px; height:150px;">
+                    <!--//-->
+                    <div class="card-body">
+                        <h5 class="card-title" v-text="product.title"></h5>
+                        <p class="card-text" v-text="product.description"></p>
+                        <p class="card-text">Price: {{ product.price }}</p>
+                    </div>
+                    <!--//-->
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col" v-for="item in items" :key="item.id">
                                 <span :class="item.color">
                                     <a @click="info(item.route, product.id)"><i :class="item.icon"></i></a>
                                 </span>
-                                    </div>
-                                </div>
                             </div>
-                            <!--//-->
                         </div>
                     </div>
-                </carousel>
-                <!--//-->
+                    <!--//-->
+                </div>
             </div>
+            <!--//-->
         </div>
-    </section>
+    </div>
 </template>
 
 <script>
@@ -73,6 +69,8 @@
     import carousel from 'vue-owl-carousel'
     import {mapState} from 'vuex'
     import ProductItems from '../../../api/front/ProductItems.json';
+    import 'owl.carousel/dist/assets/owl.carousel.css';
+    import 'owl.carousel';
 
     export default {
         name: "Products",
@@ -85,6 +83,11 @@
             }
         },
         mounted() {
+            $(document).ready(function () {
+                $('.owl-carousel').owlCarousel({
+                    items: 6
+                });
+            });
             this.loading = false;
             this.$store.dispatch('Products/ProductLike');
             return this.$store.dispatch('Products/isProducts');

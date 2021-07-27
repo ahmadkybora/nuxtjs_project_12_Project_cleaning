@@ -4,6 +4,7 @@
     "title": "Employees",
     "icon": "fas fa-apple-alt",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/employees"
   },
   {
@@ -11,6 +12,7 @@
     "title": "Users",
     "icon": "fas fa-atom",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/users"
   },
   {
@@ -18,6 +20,7 @@
     "title": "Brands",
     "icon": "fas fa-book",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/brands"
   },
   {
@@ -25,6 +28,7 @@
     "title": "ProductCategories",
     "icon": "fas fa-book",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/productCategories"
   },
   {
@@ -32,6 +36,7 @@
     "title": "Product",
     "icon": "fas fa-car-side",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/products"
   },
   {
@@ -39,6 +44,7 @@
     "title": "ArticleCategories",
     "icon": "fas fa-coins",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/articleCategories"
   },
   {
@@ -46,6 +52,7 @@
     "title": "Article",
     "icon": "fas fa-concierge-bell",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/articles"
   },
   {
@@ -53,6 +60,7 @@
     "title": "Orders",
     "icon": "fas fa-concierge-bell",
     "color": "background-color: skyblue",
+    "border": "border-radius: 15px",
     "route": "/panel/orders"
   }
 ]

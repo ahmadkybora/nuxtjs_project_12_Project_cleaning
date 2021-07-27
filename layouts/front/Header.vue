@@ -1,72 +1,132 @@
 <template>
     <div class="container-fluid">
         <!--//-->
-        <nav class="navbar navbar-expand-lg navbar-light shadow-md">
-            <ul class="navbar-nav justify-content-center w-100 list-unstyled my-3">
-                <li class="nav-item mx-5">
-                    <nuxt-link to="/" class="nav-link">
-                        <i class="fa fa-home"></i>
-                        Home
-                    </nuxt-link>
-                </li>
-                <li class="nav-item mx-5 dropdown">
-                    <a href="#"
-                       class="nav-link dropdown-toggle"
-                       data-toggle="dropdown">
-                        Products
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
+        <nav class="navbar navbar-expand-lg navbar-light shadow-sm">
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#mynav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mynav">
+                <ul class="navbar-nav justify-content-center w-100 list-unstyled my-3 my-md-0">
+                    <div class="row justify-content-center w-100">
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <nuxt-link to="/" class="nav-link">
+                                <i class="fa fa-home btn"></i>
+                                Home
+                            </nuxt-link>
+                        </li>
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                dropdown
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <a href="#"
+                               class="nav-link dropdown-toggle"
+                               data-toggle="dropdown">
+                                <i class="fa fa-home btn"></i>
+                                Products
+                            </a>
+                            <div class="dropdown-menu">
+                                <nuxt-link to="/" class="dropdown-item">
+                                    Pro1
+                                </nuxt-link>
+                            </div>
+                        </li>
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                dropdown
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <a href=""
+                               class="nav-link dropdown-toggle"
+                               data-toggle="dropdown">
+                                <i class="fa fa-home btn"></i>
+                                Articles
+                            </a>
+                            <div class="dropdown-menu">
+                                <nuxt-link to="/" class="dropdown-item">
+                                    Ar1
+                                </nuxt-link>
+                            </div>
+                        </li>
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                dropdown
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <a href="#"
+                               class="nav-link dropdown-toggle"
+                               data-toggle="dropdown">
+                                <i class="fa fa-home btn"></i>
+                                Threads
+                            </a>
+                            <div class="dropdown-menu">
+                                <nuxt-link to="/" class="dropdown-item">
+                                    Th1
+                                </nuxt-link>
+                            </div>
+                        </li>
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <a href="" class="nav-link">
+                                <i class="fa fa-home btn"></i>
+                                About
+                            </a>
+                        </li>
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <a href="" class="nav-link">
+                                <i class="fa fa-home btn"></i>
+                                Contact Us
+                            </a>
+                        </li>
+                        <!--//-->
+                        <li class="nav-item
+                mx-4
+                col-xl-1
+                col-lg-1
+                col-md-2
+                col-sm-4
+                col-xs-12">
+                            <nuxt-link to="/chats" class="nav-link">
+                                <i class="fa fa-home btn"></i>
+                                Chat Room
+                            </nuxt-link>
+                        </li>
+                        <!--//-->
                     </div>
-                </li>
-                <li class="nav-item mx-5 dropdown">
-                    <a href=""
-                       class="nav-link dropdown-toggle"
-                       data-toggle="dropdown">
-                        Articles
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                    </div>
-                </li>
-                <li class="nav-item mx-5 dropdown">
-                    <a href="#"
-                       class="nav-link dropdown-toggle"
-                       data-toggle="dropdown">
-                        Threads
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                        <a href="" class="dropdown-item"></a>
-                    </div>
-                </li>
-                <li class="nav-item mx-5">
-                    <a href="" class="nav-link">
-                        <i class=""></i>
-                        About
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="" class="nav-link">
-                        <i class=""></i>
-                        Contact Us
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <nuxt-link to="/chats" class="nav-link">
-                        <i class=""></i>
-                        Chat Room
-                    </nuxt-link>
-                </li>
-            </ul>
+                </ul>
+            </div>
         </nav>
         <!--//-->
         <!--<div class="row">
@@ -87,7 +147,15 @@
         name: 'Header',
         data() {
             return {
-                items: HeaderItems
+                items: HeaderItems,
+                responsive: {
+                    XS: 576, // XS < 576 px
+                    SM: 576, // SM >= 576 px
+                    MD: 768, // MD >= 768 px
+                    LG: 992, // LG >= 992 px
+                    XL: 1200, // XL >= 1200 px
+                    XXL: 1400, // XXl >= 1400 px
+                }
             }
         }
     }

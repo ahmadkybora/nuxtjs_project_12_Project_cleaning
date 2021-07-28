@@ -2,8 +2,10 @@
     <div>
         <Navbar/>
         <Header/>
-        <Sidebar/>
-        <Nuxt/>
+        <div class="row">
+            <Sidebar/>
+            <Nuxt/>
+        </div>
         <Footer/>
     </div>
 </template>
@@ -12,7 +14,8 @@
     import Navbar from "./products/Navbar";
     import Header from "./products/Header";
     import Sidebar from "./products/Sidebar";
-    import Footer from "./products/Footer";
+    import Footer from "./front/Footer";
+
     export default {
         name: "products",
         components: {Footer, Sidebar, Navbar, Header}

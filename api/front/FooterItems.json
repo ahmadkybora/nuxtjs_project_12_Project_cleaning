@@ -3,7 +3,8 @@
     "id": 1,
     "title": "Footman",
     "icon": "",
-    "style": "font-size: 20px"
+    "style": "font-size: 20px",
+    "img": "/_nuxt/assets/img/system.png"
   },
   {
     "id": 2,

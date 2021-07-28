@@ -40,7 +40,8 @@ export const error = (err) => {
         case 401:
             Swal.fire('Warning!', err.response.data.message, 'warning')
                 .then(() => {
-                    return 401;
+                    return 401
+                    //return redirect('/errors/err_401')
                 });
             break;
         case 403:
@@ -48,32 +49,32 @@ export const error = (err) => {
                 for (let i = 0; i < err.response.data.errors.length; i++) {
                     Swal.fire('Warning!', err.response.data.errors[i].message, 'warning')
                         .then(() => {
-                            return redirect('/errors/403');
+                            return redirect('/errors/err_403');
                         });
                 }
             } else {
                 Swal.fire('Warning!', err.response.data.message, 'warning')
                     .then(() => {
-                        return redirect('/errors/403');
+                        return redirect('/errors/err_403');
                     });
             }
             break;
         case 404:
             Swal.fire('Warning!', '404 Not Found!', 'warning')
                 .then(() => {
-                    return redirect('/errors/404');
+                    return redirect('/errors/err_404');
                 });
             break;
         case 500:
             Swal.fire('Warning!', 'Service is unavailable', 'warning')
                 .then(() => {
-                    return redirect('/errors/500')
+                    return redirect('/errors/err_500')
                 });
             break;
         case 503:
             Swal.fire('Warning!', 'Service is unavailable', 'warning')
                 .then(() => {
-                    return redirect('/errors/503')
+                    return redirect('/errors/err_503')
                 });
             break;
         default:

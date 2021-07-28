@@ -17,13 +17,13 @@
                 </div>
             </form>
             <!--//-->
-            <div class="owl-carousel owl-theme">
+            <div class="owl-carousel owl-theme mt-4">
                 <div v-for="product in products" :key="product.id"
-                     class="card m-2" style="width: 15rem; border-radius: 15px">
+                     class="card" style="width: 15rem; border-radius: 15px">
                     <!--//-->
-                    <img v-if="loading"
+                    <img v-if="!loading"
                          class="card-img-top circle float-right"
-                         src="../../../assets/loader.gif"
+                         src="../../../assets/img/system.png"
                          alt="Card image cap"
                          style="width: 230px; height:150px;">
                     <!--//-->
@@ -83,14 +83,45 @@
             }
         },
         mounted() {
-            $(document).ready(function () {
-                $('.owl-carousel').owlCarousel({
-                    items: 6
-                });
-            });
             this.loading = false;
             this.$store.dispatch('Products/ProductLike');
-            return this.$store.dispatch('Products/isProducts');
+            return this.$store.dispatch('Products/isProducts').then(() => {
+                $(document).ready(function () {
+                    $('.owl-carousel').owlCarousel({
+                        items: 6,
+                        responsive: {
+                            0: {
+                                items: 1,
+                                autoplay: true,
+                            },
+                            600: {
+                                items: 2,
+                                autoplay: true,
+                            },
+                            860: {
+                                items: 3,
+                                autoplay: true,
+                            },
+                            1180: {
+                                items: 4,
+                                autoplay: true,
+                            },
+                            1410: {
+                                items: 5,
+                                autoplay: true,
+                            },
+                            1610: {
+                                items: 6,
+                                autoplay: true,
+                            },
+                            1900: {
+                                items: 7,
+                                autoplay: true,
+                            }
+                        }
+                    });
+                });
+            });
         },
         computed: {
             ...mapState({

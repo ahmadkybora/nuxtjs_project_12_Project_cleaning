@@ -224,6 +224,7 @@ const actions = {
             })
             .catch(err => {
                 error(err);
+                return this.$router.push('login');
             })
     },
 

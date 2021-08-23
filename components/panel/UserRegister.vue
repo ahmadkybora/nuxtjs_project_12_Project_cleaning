@@ -794,11 +794,11 @@
                                 <!--//-->
                             </div>
                             <!--//-->
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-6">
-                                    <!--//-->
-                                    <!--:class="{ 'form-group&#45;&#45;error': $v.user.permission.$error }"
-                                    v-model.trim="$v.user.permission.$model"-->
+                                    &lt;!&ndash;//&ndash;&gt;
+                                    &lt;!&ndash;:class="{ 'form-group&#45;&#45;error': $v.user.permission.$error }"
+                                    v-model.trim="$v.user.permission.$model"&ndash;&gt;
                                     <div class="form-group" v-if="editMode">
                                         <select
                                                 v-model="user.permission"
@@ -817,7 +817,7 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <!--//-->
+                                    &lt;!&ndash;//&ndash;&gt;
                                     <div class="form-group" v-else>
                                         <h4>Please Select Permissions</h4>
                                         <select v-model="permission"
@@ -832,13 +832,13 @@
                                             </option>
                                         </select>
                                     </div>
-                                    <!--//-->
+                                    &lt;!&ndash;//&ndash;&gt;
                                 </div>
-                                <!--//-->
+                                &lt;!&ndash;//&ndash;&gt;
                                 <div class="col-md-6">
                                     <div class="form-group" v-if="editMode">
-                                        <!--:class="{ 'form-group&#45;&#45;error': $v.user.role.$error }"
-                                        v-model.trim="$v.user.role.$model"-->
+                                        &lt;!&ndash;:class="{ 'form-group&#45;&#45;error': $v.user.role.$error }"
+                                        v-model.trim="$v.user.role.$model"&ndash;&gt;
                                         <select
                                                 v-model="user.role"
                                                 name="role[]"
@@ -871,7 +871,7 @@
                                         </select>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                             <!--//-->
                             <div class="row">
                                 <div class="col-md-12">
@@ -1069,15 +1069,15 @@
         props: ['user', 'editMode'],
         mounted() {
             //alert(this.$v.$touch());
-            return this.$store.dispatch('Roles/allPermissions')
+/*            return this.$store.dispatch('Roles/allPermissions')
                 .then(() => {
                     this.$store.dispatch('Roles/allRoles');
-                });
+                });*/
         },
         computed: {
             ...mapState({
-                permissions: state => state.Roles.allPermissions.data,
-                roles: state => state.Roles.allRoles.data,
+                /*permissions: state => state.Roles.allPermissions.data,
+                roles: state => state.Roles.allRoles.data,*/
                 users: state => state.Users.getUsers,
                 showUser: state => state.Users.isUser,
                 //editUser: state => state.Users.isUser,

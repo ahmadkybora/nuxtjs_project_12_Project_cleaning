@@ -60,9 +60,9 @@
     },
     methods: {
       async onLogin() {
-        const google_rECAPTCHA = await this.$recaptcha.execute('login');
+        //const google_rECAPTCHA = await this.$recaptcha.execute('login');
         const Login = {
-          google_rECAPTCHA,
+          google_rECAPTCHA: null,
           username: this.username,
           password: this.password,
         };

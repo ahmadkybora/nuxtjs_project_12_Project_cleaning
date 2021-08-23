@@ -105,14 +105,14 @@
                                 </UserShow>-->
                                 <a href="javascript:void(0)"
                                    v-if="hasPermissionUpdateEmployee === updateEmployee"
-                                   @click="EmployeeEdit(employee)">
+                                   @click="employeeEdit(employee)">
                                     <i class="fas fa-pen text-success"></i>
                                 </a>
                             </div>
                             <div class="row">
                                 <a href="javascript:void(0)"
                                    v-if="hasPermissionDestroyEmployee === destroyEmployee"
-                                   @click="EmployeeDelete(employee.id)">
+                                   @click="employeeDelete(employee.id)">
                                     <i class="fas fa-trash text-danger"></i>
                                 </a>
                                 /

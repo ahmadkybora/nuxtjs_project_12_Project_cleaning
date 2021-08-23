@@ -838,6 +838,93 @@
                             </div>
                             <!--//-->
                             <div class="row">
+                                <div class="col-md-6">
+                                    <!--//-->
+                                    <!--:class="{ 'form-group&#45;&#45;error': $v.user.permission.$error }"
+                                    v-model.trim="$v.user.permission.$model"-->
+                                    <div class="form-group" v-if="editMode">
+                                        <select
+                                                @change="onChange($event)"
+                                                v-model="employee.permission"
+                                                name="permission[]"
+                                                id="permission[]"
+                                                class="form-control"
+                                                multiple="multiple">
+                                            <option multiple="multiple"
+                                                    value=""
+                                                    selected disabled hidden>
+                                                Please Select Permissions
+                                            </option>
+                                            <!--<option v-for="permission in permissions"
+                                                    :value="permission.id"
+                                                    v-text="permission.name">
+
+                                            </option>-->
+                                            <option v-for="up in userPermission"
+                                                    v-if="up.hasPermission === true"
+                                                    selected
+                                                    v-text="up.name"
+                                                    :value="up.id">
+                                            </option>
+                                        </select>
+                                        <!--         <span v-for="up in userPermission">{{ up.hasPermission }}</span>-->
+                                    </div>
+                                    <!--//-->
+                                    <div class="form-group" v-else>
+                                        <h4>Please Select Permissions</h4>
+                                        <select v-model="permission"
+                                                name="permission[]"
+                                                id="permission"
+                                                class="form-control"
+                                                multiple="multiple">
+                                            <option value="" selected disabled hidden>Please Select Permissions</option>
+                                            <option v-for="permission in permissions"
+                                                    :value="permission.id"
+                                                    v-text="permission.name">
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <!--//-->
+                                </div>
+                                <!--//-->
+                                <div class="col-md-6">
+                                    <div class="form-group" v-if="editMode">
+                                        <!--:class="{ 'form-group&#45;&#45;error': $v.user.role.$error }"
+                                        v-model.trim="$v.user.role.$model"-->
+                                        <select
+                                                v-model="employee.role"
+                                                name="role[]"
+                                                id="role"
+                                                class="form-control"
+                                                multiple="multiple">
+                                            <option multiple="multiple"
+                                                    value=""
+                                                    selected disabled hidden>
+                                                Please Select Role
+                                            </option>
+                                            <option v-for="userRole in employee.RoleUsers"
+                                                    v-text="userRole.Role.name" selected>
+                                            </option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group" v-else>
+                                        <h4>Please Select Role</h4>
+                                        <select v-model="role"
+                                                name="role[]"
+                                                id="role[]"
+                                                class="form-control"
+                                                multiple="multiple">
+                                            <option value="" selected disabled hidden>Please Select Role</option>
+                                            <option v-for="role in roles"
+                                                    :value="role.id"
+                                                    v-text="role.name">
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--//-->
+                            <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
                                         <button v-if="!editMode" class="btn btn-success" type="submit">Register
@@ -864,6 +951,7 @@
 </template>
 
 <script>
+    import {mapState} from 'vuex';
     import Vue from 'vue'
     import Vuelidate from 'vuelidate'
 
@@ -897,6 +985,9 @@
                 isSelected: false,
                 showImage: '',
                 submitStatus: '',
+                permission: [],
+                role: [],
+                p: [],
             }
         },
         validations: {
@@ -1025,8 +1116,130 @@
         },
         props: ['employee', 'editMode'],
         mounted() {
+            return this.$store.dispatch('Roles/allPermissions')
+                .then(() => {
+                    this.$store.dispatch('Roles/allRoles');
+                });
+        },
+        computed: {
+            ...mapState({
+                permissions: state => state.Roles.allPermissions.data,
+                roles: state => state.Roles.allRoles.data,
+                users: state => state.Users.getUsers,
+                showUser: state => state.Users.isUser,
+                //editUser: state => state.Users.isUser,
+                //deleteUser: state => state.Users.isUser,
+            }),
+            userPermission() {
+                for (let i = 0; i < this.permissions.length; i++) {
+                    this.permissions[i].hasPermission = false;
+                    console.log(this.permissions[i].id);
+
+
+                    for (let j = 0; j < this.employee.PermissionUsers.length; j++) {
+                        this.employee.PermissionUsers[j].Permission.hasPermission = true;
+                        console.log(this.employee.PermissionUsers[j].Permission.id);
+                        if (this.permissions[i].id === this.employee.PermissionUsers[j].Permission.id) {
+                            this.permissions[i].hasPermission = true;
+                        }
+                    }
+                }
+                return this.permissions;
+                //console.log(this.permissions);
+                //let hasPermission = ["hasPermission" [true]];
+                //let hasPermission = ["hasPermission", true];
+                /*let hasPermission = [];
+                hasPermission["hasPermission"] = true;*/
+                /*let hasPermission = {
+                    hasPermission: true,
+                };*/
+                /*let allPermissions = [];
+                let userPermissions = [];*/
+                /*this.permissions[i] = Object.entries(this.permissions[i]);
+                this.permissions[i].push(hasPermission);*/
+                //console.log(this.permissions[i]);
+                //allPermissions[i].push({hasPermission: false});
+                /*for (let i = 0; i < this.employee.PermissionUsers.length; i++) {
+                    this.employee.PermissionUsers[i].Permission.hasPermission = true;
+
+                    //hasPermission = true;
+                    /!*userPermissions[i] = Object.keys(this.employee.PermissionUsers[i].Permission);
+                    userPermissions[i].push({hasPermission: true});*!/
+                }*/
+                /*console.log(this.permissions)
+
+                for (let i = 0; i < allPermissions.length; i++) {
+                    for (let i = 0; i < userPermissions.length; i++) {
+                        //console.log(userPermissions.id);
+                    }
+                }*/
+                //console.log(allPermissions);
+                //return up;
+
+                /*let pk = [];
+                let pv = [];
+                let pa = [];
+                let p = [];
+                /!*this.permissions.forEach(function (element) {
+                    p [i] = console.log(element.id);
+                });*!/
+                for (let i = 0; i < this.permissions.length; i++) {
+                    //hasPermission = false;
+                    /!*ap[i] = Object.entries(this.permissions[i]);
+                    ap[i].push(hasPermission);*!/
+                    ap[i] = Object.keys(this.permissions[i]);
+                    ap[i].push({hasPermission: false});
+                    //ap[i] = this.permissions[i].hasPermission = true;
+
+
+                    for (let i = 0; i < this.employee.PermissionUsers.length; i++) {
+                        hasPermission = true;
+                        up[i] = Object.keys(this.employee.PermissionUsers[i].Permission);
+                        up[i].push({hasPermission: true});
+
+                    }
+                    console.log(up);
+                    return up;*/
+                /*pv = Object.values(this.permissions[i]);
+                pa = Object.entries(this.permissions[i]);*/
+                /*p = this.permissions[i];
+                p.push(s);*/
+
+                /*for (let i = 0; i < this.employee.PermissionUsers.length; i++) {
+                    up[i] = this.employee.PermissionUsers[i].Permission.id;
+                }*/
+
+                /*if(p === up){
+
+                }*/
+                /*for(let p in this.permissions){
+                    //console.log(this.permissions);
+                    return p.name;
+                }*/
+                //let p = [];
+                /*for (let i = 0; i < this.permissions.length; i++) {
+                    return this.p[i] = this.permissions[i].id;
+                }*/
+                //return p;
+                /*let p = [];
+                for (let i = 0; i < this.employee.PermissionUsers.length; i++) {
+                    p[i] = this.employee.PermissionUsers[i].Permission;
+                }
+                return p;
+                for (let permission in this.permissions) {
+                    '<te<option :value="permission.id" ' +
+                    'v-text="permission.name">' +
+                    '</option>'
+                }
+
+                '<option v-for="userPermission in employee.PermissionUsers" v-text="userPermission.Permission.name" selected></option>'*/
+            }
         },
         methods: {
+            onChange(event) {
+                var id = event.target.value;
+                console.log(event.target.value)
+            },
             onFileSelected(event) {
                 this.image = event.target.files[0];
                 let fileReader = new FileReader();
